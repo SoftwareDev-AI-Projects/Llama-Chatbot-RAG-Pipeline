@@ -10,6 +10,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 data_path = os.getenv("DATA_PATH")
+logging.basicConfig(
+    filename='log/app.log',
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s:%(message)s'
+)
+
 app = FastAPI()
 pipe = RAGPipeline(data_path)
 logger = logging.getLogger(__name__)
@@ -31,7 +37,7 @@ async def query(request: QueryRequestModel):
         raise HTTPException(status_code=500, detail="Question cannot be empty")
 
     logger.log(logging.INFO, f"Invoking RAG pipeline for the question: {question}")
-    answer = pipe.get_answer(question, product_name)
+    answer = pipe.get_answer(product_name, question)
     response = {"answer": answer, "status": True, "message": "Success"}
     logger.log(logging.INFO, f"Returning response: {response}")
 
@@ -40,5 +46,4 @@ async def query(request: QueryRequestModel):
 
 if __name__ == "__main__":
     logger.log(logging.INFO, "Starting the server")
-    print("Starting the server")
     uvicorn.run(app, host="0.0.0.0", port=8080)
