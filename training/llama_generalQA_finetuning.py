@@ -53,7 +53,7 @@ def create_chat_template(row):
 
 def generate_response(user_input):
     """
-    Generate response based on the user input
+    Generate response based on the user inputs
     :param user_input: user input question
     :return: response of the llm model
     """

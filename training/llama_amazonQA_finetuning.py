@@ -72,17 +72,18 @@ peft_config = LoraConfig(
 training_args = TrainingArguments(
     output_dir="./model/Llama-3.2-1B-finetuned-amazonQA",
     logging_dir="./logs",
+    max_steps=10000,
     per_device_train_batch_size=2,
     per_device_eval_batch_size=2,
     eval_steps=2000,
     learning_rate=2e-5,
-    save_strategy="epoch",
+    save_strategy="steps",
     save_steps=2000,
     logging_steps=2000,
     save_total_limit=2,
     num_train_epochs=30,
     fp16=True,
-    eval_strategy="epoch",
+    eval_strategy="steps",
     load_best_model_at_end=True
 )
 
