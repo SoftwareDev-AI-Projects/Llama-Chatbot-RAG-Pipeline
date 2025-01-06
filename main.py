@@ -44,6 +44,16 @@ async def query(request: QueryRequestModel):
     return JSONResponse(content=response)
 
 
+@app.get("/health")
+def health():
+    """
+    Handles the health-check endpoint for the application.
+
+    :return: JSONResponse containing the health status
+    """
+    return JSONResponse(content={"status": "UP"})
+
+
 if __name__ == "__main__":
     logger.log(logging.INFO, "Starting the server")
     uvicorn.run(app, host="0.0.0.0", port=8080)
